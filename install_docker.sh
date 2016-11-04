@@ -9,7 +9,7 @@ sudo su -c chmod +x /usr/local/bin/docker-compose
 # Instalo utilidades
 sudo apt-get install -y --no-install-recommends mc htop nano ncdu
 
-sudo usermode -aG docker $USER
+sudo usermod -aG docker $USER
 # Ejecutar racher-agent desde Rancher-UI/Add Host
 echo "** No olvide de: Ejecutar racher-agent desde Rancher-UI/Add Host **"
 # copiar docker-compose.yml y upgrade.sh del proyecto a la VM
