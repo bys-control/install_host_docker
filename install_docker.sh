@@ -10,6 +10,17 @@ sudo su -c 'chmod +x /usr/local/bin/docker-compose'
 sudo apt-get install -y --no-install-recommends mc htop nano ncdu
 
 sudo usermod -aG docker $USER
+
+# Configuro logrotate para docker
+sudo su -c 'echo "/var/lib/docker/containers/*/*.log {
+	daily
+	rotate 7rm dock
+	copytruncate
+	missingok
+	compress
+	notifempty
+}" > /etc/logrotate.d/docker'
+
 # Ejecutar racher-agent desde Rancher-UI/Add Host
 echo "** No olvide de: Ejecutar racher-agent desde Rancher-UI/Add Host **"
 # copiar docker-compose.yml y upgrade.sh del proyecto a la VM
