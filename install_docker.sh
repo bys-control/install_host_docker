@@ -27,3 +27,20 @@ echo "** No olvide de: Ejecutar racher-agent desde Rancher-UI/Add Host **"
 echo "** Copiar docker-compose.yml y upgrade.sh del proyecto a la VM **"
 # ejecutar upgrade.sh
 echo "** Ejecutar upgrade.sh **"
+
+sudo su -c 'echo "[Unit]
+Description=Docker HTTP Socket for the API
+
+[Socket]
+ListenStream=2375
+BindIPv6Only=both
+Service=docker.service
+
+[Install]
+WantedBy=sockets.target
+" > /etc/systemd/system/docker-tcp.socket'
+
+sudo systemctl enable docker-tcp.socket
+sudo systemctl stop docker
+sudo systemctl start docker-tcp.socket
+sudo systemctl start docker
