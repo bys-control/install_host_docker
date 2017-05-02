@@ -1,4 +1,7 @@
 #!/bin/bash
+#echo "### Instalo utilidades ###"
+sudo apt-get install -y --no-install-recommends mc htop nano ncdu git curl
+
 if ! which docker 1>/dev/null; then
 	echo "### Instalo docker ###"
 	curl -sSL https://get.docker.com/ | sh
@@ -10,9 +13,6 @@ if ! which docker-compose 1>/dev/null; then
 	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
 	sudo su -c 'chmod +x /usr/local/bin/docker-compose'
 fi
-
-echo "### Instalo utilidades ###"
-sudo apt-get install -y --no-install-recommends mc htop nano ncdu
 
 echo "### Configuro logrotate para docker ###"
 sudo su -c 'echo "/var/lib/docker/containers/*/*.log {
