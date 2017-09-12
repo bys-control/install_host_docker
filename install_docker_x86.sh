@@ -63,7 +63,7 @@ git clone -b master --single-branch https://github.com/bys-control/docker-promet
 echo -e "${WARN_COLOR}===== Installing portainer  =====${NO_COLOR}"
 mkdir -p ~/docker/portainer
 echo "ui:
-  image: portainer/portainer:linux-arm
+  image: portainer/portainer
   restart: always
   volumes:
     - '/var/run/docker.sock:/var/run/docker.sock'
