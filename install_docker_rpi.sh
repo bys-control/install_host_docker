@@ -35,14 +35,17 @@ echo -e "${WARN_COLOR}===== Adding deploy keys =====${NO_COLOR}"
 mkdir -p ~/.ssh
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtT9e4pDwpGZ9FDuuS5HWTY6BV2NgmNauPRzM8rX6cpK8S5gCYMSwJg4NxTPH+n9T9pSb2/2OsFuK6XoDVt4VWaCc8a1HwcXzkfS7HQJFV8t2hWHgvrUB09jkchQPdhqt9iLTo2jsErHfrZ2VpRhB+d2C125g0LYsuuvxXl9OIYzDPM/b557TBe5WfmMgRqMysLgd6YsXohR8Zfa3yZIjhZpsVG4c8NQzXdjnhwmtP1QdNlMpTX0L5MA4p9Wqu5L2JEFlzfWWJl6NnRr4gGAaVhnsIz0utpW5/ppR+7N9EehxORd6IiKfFt2sN3dfD0yMA1eaF/7fBLMaKVKcKaEJB deploy" > ~/.ssh/authorized_keys
 
+echo -e "${WARN_COLOR}===== Enabling and starting SSH service =====${NO_COLOR}"
+sudo systemctl enable ssh
+sudo service ssh start
+
 echo -e "${WARN_COLOR}===== Change default screen framebuffer size =====${NO_COLOR}"
-echo "framebuffer_width=1280
-framebuffer_height=720" >> /boot/config.txt
+sudo su -c 'echo "framebuffer_width=1280
+framebuffer_height=720" >> /boot/config.txt'
 
 echo -e "${WARN_COLOR}===== Installing teamviewer =====${NO_COLOR}"
 wget https://download.teamviewer.com/download/linux/teamviewer-host_armhf.deb
-sudo dpkg -i teamviewer-host_armhf.deb
-sudo apt install -f -y
+sudo gdebi teamviewer-host_armhf.deb
 
 echo -e "${WARN_COLOR}===== Installing tinc VPN =====${NO_COLOR}"
 mkdir -p ~/docker/tinc
@@ -81,3 +84,5 @@ echo "ui:
   ports:
     - 8080:9000
 " > ~/docker/portainer/docker-compose.yml
+
+echo -e "${WARN_COLOR}===== DONE!!!  =====${NO_COLOR}"
