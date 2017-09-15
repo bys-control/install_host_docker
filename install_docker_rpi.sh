@@ -1,10 +1,14 @@
 #!/bin/bash
 set -e
 
+# color in stdout
 NO_COLOR='\033[0m'
 OK_COLOR='\033[32;01m'
 ERROR_COLOR='\033[31;01m'
 WARN_COLOR='\033[33;01m'
+
+sh ./wifi-connection.sh
+sh ./swap-configuration.sh
 
 echo -e "${WARN_COLOR}===== Installing Utilities =====${NO_COLOR}"
 sudo apt udpate && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen
