@@ -16,7 +16,7 @@ echo -e "${WARN_COLOR}===== Configure Autoconnect to WiFi Network DHCP Enable ==
 
 read -p "Would you like to configure a WI-FI connection? y/n [default: $DEFAULT_CONFIGURE_WIFI]: " CONFIGURE_WIFI
 CONFIGURE_WIFI="${CONFIGURE_WIFI:-$DEFAULT_CONFIGURE_WIFI}"
-if [ $CONFIGURE_WIFI="y" ]; then
+if [ ${CONFIGURE_WIFI} == 'y' ]; then
 	read -p "Please enter CONNECTION_NAME [leave blank if you don't try to connect through wifi adapter]: " CONNECTION_NAME
 	read -p "Please enter PASSWORD_WIFI [leave blank if you don't try to connect throught wifi adapter]: " PASSWORD_WIFI
 
