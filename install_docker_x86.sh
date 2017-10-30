@@ -17,7 +17,7 @@ fi
 
 if ! which docker-compose 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker-compose =====${NO_COLOR}"
-	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
+	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
 	sudo su -c 'chmod +x /usr/local/bin/docker-compose'
 fi
 
@@ -39,7 +39,7 @@ echo -e "${WARN_COLOR}===== Installing tinc VPN =====${NO_COLOR}"
 mkdir -p ~/docker/tinc
 echo "tinc:
    restart: always
-   image: byscontrol/tinc-rpi
+   image: byscontrol/tinc
    container_name: tinc
    net: host
    cap_add:
