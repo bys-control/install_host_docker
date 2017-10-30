@@ -7,7 +7,7 @@ ERROR_COLOR='\033[31;01m'
 WARN_COLOR='\033[33;01m'
 
 echo -e "${WARN_COLOR}===== Installing Utilities =====${NO_COLOR}"
-sudo apt udpate && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen
+sudo apt update && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen
 
 if ! which docker 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker =====${NO_COLOR}"
