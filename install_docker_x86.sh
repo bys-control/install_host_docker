@@ -24,7 +24,7 @@ fi
 echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
 sudo su -c 'echo "/var/lib/docker/containers/*/*.log {
 	daily
-	rotate 7rm dock
+	rotate 7
 	copytruncate
 	missingok
 	compress
