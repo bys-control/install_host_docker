@@ -17,7 +17,7 @@ fi
 
 if ! which docker-compose 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker-compose =====${NO_COLOR}"
-	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
+	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
 	sudo su -c 'chmod +x /usr/local/bin/docker-compose'
 fi
 
