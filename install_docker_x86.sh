@@ -7,18 +7,35 @@ ERROR_COLOR='\033[31;01m'
 WARN_COLOR='\033[33;01m'
 
 echo -e "${WARN_COLOR}===== Installing Utilities =====${NO_COLOR}"
-sudo apt update && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen
+sudo apt update && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen zsh samba net-tools ssh
+sudo usermod -s $(which zsh) $(whoami)
+
+# Allows ssh traffic thru Firewall
+sudo ufw allow ssh
+
+# Setup Git aliases
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+
+echo -e "\n${WARN_COLOR}===== Instalando oh-my-zsh =====${NO_COLOR}"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+echo 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
+# Configure Theme
+sed -i.bak 's/robbyrussell/powerlevel10k\/powerlevel10k/' ~/.zshrc
+# Configure plugins
+sed -i.bak 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+# Install fonts
+sudo apt-get install -y --no-install-recommends powerline fonts-powerline
 
 if ! which docker 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker =====${NO_COLOR}"
-	curl -sSL https://get.docker.com/ | sh
-	sudo usermod -aG docker $USER
-fi
-
-if ! which docker-compose 1>/dev/null; then
-	echo -e "${WARN_COLOR}===== Installing docker-compose =====${NO_COLOR}"
-	sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
-	sudo su -c 'chmod +x /usr/local/bin/docker-compose'
+        sudo snap install docker
+	sudo groupadd docker && sudo usermod -aG docker $USER
 fi
 
 echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
@@ -70,5 +87,5 @@ echo "ui:
   expose:
     - 9000
   ports:
-    - 8080:9000
+    - 9000:9000
 " > ~/docker/portainer/docker-compose.yml
