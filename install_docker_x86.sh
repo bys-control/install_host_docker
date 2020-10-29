@@ -39,7 +39,7 @@ if ! which docker 1>/dev/null; then
 fi
 
 echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
-sudo su -c 'echo "/var/lib/docker/containers/*/*.log {
+sudo su -c 'echo "/var/snap/docker/common/var-lib-docker/containers/*/*.log {
 	daily
 	rotate 7
 	copytruncate
