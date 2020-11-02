@@ -10,6 +10,10 @@ echo -e "${WARN_COLOR}===== Installing Utilities =====${NO_COLOR}"
 sudo apt update && sudo apt install -y --no-install-recommends mc htop nano ncdu git curl screen zsh samba net-tools ssh
 sudo usermod -s $(which zsh) $(whoami)
 
+# Set default timezone
+sudo timedatectl set-ntp yes
+sudo timedatectl set-timezone America/Argentina/Buenos_Aires
+
 # Allows ssh traffic thru Firewall
 sudo ufw allow ssh
 
