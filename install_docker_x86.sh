@@ -39,6 +39,8 @@ sudo apt-get install -y --no-install-recommends powerline fonts-powerline
 if ! which docker 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker =====${NO_COLOR}"
         sudo snap install docker
+	sudo ln -s /snap/bin/docker /usr/bin/docker
+	sudo ln -s /snap/bin/docker-compose /usr/bin/docker-compose
 	sudo groupadd docker && sudo usermod -aG docker $USER
 fi
 
