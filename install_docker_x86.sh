@@ -59,10 +59,10 @@ mkdir -p ~/.ssh
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtT9e4pDwpGZ9FDuuS5HWTY6BV2NgmNauPRzM8rX6cpK8S5gCYMSwJg4NxTPH+n9T9pSb2/2OsFuK6XoDVt4VWaCc8a1HwcXzkfS7HQJFV8t2hWHgvrUB09jkchQPdhqt9iLTo2jsErHfrZ2VpRhB+d2C125g0LYsuuvxXl9OIYzDPM/b557TBe5WfmMgRqMysLgd6YsXohR8Zfa3yZIjhZpsVG4c8NQzXdjnhwmtP1QdNlMpTX0L5MA4p9Wqu5L2JEFlzfWWJl6NnRr4gGAaVhnsIz0utpW5/ppR+7N9EehxORd6IiKfFt2sN3dfD0yMA1eaF/7fBLMaKVKcKaEJB deploy" > ~/.ssh/authorized_keys
 
 echo -e "${WARN_COLOR}===== Installing tinc VPN =====${NO_COLOR}"
-read -e -p "TINC node name: " TINC_NAME
+mkdir -p ~/docker/tinc/hosts
+read -e -p "TINC node name: " -i "node_name_without_spaces" TINC_NAME
 read -e -p "TINC IP address: " -i "10.100.0." TINC_IP
 read -e -p "TINC netmask: /" -i "16" TINC_NETMASK
-mkdir -p ~/docker/tinc
 echo "tinc:
    restart: always
    image: byscontrol/tinc
@@ -74,7 +74,7 @@ echo "tinc:
      - "/dev/net/tun"
    volumes:
      - "tinc:/etc/tinc"
-     - ./server:/etc/tinc/hosts/server
+     - ./hosts:/etc/tinc/hosts
    environment:
      - TINC_NAME=$TINC_NAME
      - TINC_IP=$TINC_IP/$TINC_NETMASK
@@ -82,16 +82,10 @@ echo "tinc:
      - TINC_INTERFACE=tun0
      - TINC_CONNECT_TO=server
 " > ~/docker/tinc/docker-compose.yml
-docker-compose -f ~/docker/tinc/docker-compose.yml up -d
-echo -e "TINC node key:${WARN_COLOR}
-$(docker exec tinc tinc export)${NO_COLOR}"
-echo "Import into TINC server using the following command:
-${WARN_COLOR}docker exec -it tinc tinc import${NO_COLOR}"
 
 echo -e "${WARN_COLOR}===== Installing monitoring service (prometheus + node_exporter + grafana)  =====${NO_COLOR}"
 mkdir -p ~/docker/prometheus
 git clone -b master --single-branch https://github.com/bys-control/docker-prometheus-monitoring --depth 1 ~/docker/prometheus
-docker-compose -f ~/docker/prometheus/docker-compose.yml up -d
 
 echo -e "${WARN_COLOR}===== Installing portainer  =====${NO_COLOR}"
 mkdir -p ~/docker/portainer
@@ -105,4 +99,3 @@ echo "ui:
   ports:
     - 9000:9000
 " > ~/docker/portainer/docker-compose.yml
-docker-compose -f ~/docker/portainer/docker-compose.yml up -d
