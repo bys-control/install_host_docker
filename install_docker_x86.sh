@@ -69,7 +69,7 @@ if ! which docker 1>/dev/null; then
 		SNAP ) install_docler_snap; break;;
 		APT ) install_docker_apt; break;;
 	    esac
-	done	
+	done < /dev/tty
        
 	sudo groupadd docker && sudo usermod -aG docker $USER
 fi
@@ -90,9 +90,9 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtT9e4pDwpGZ9FDuuS5HWTY6BV2NgmNauPRz
 
 echo -e "${WARN_COLOR}===== Installing tinc VPN =====${NO_COLOR}"
 mkdir -p ~/docker/tinc/hosts
-read -e -p "TINC node name: " -i "node_name_without_spaces" TINC_NAME
-read -e -p "TINC IP address: " -i "10.100.0." TINC_IP
-read -e -p "TINC netmask: /" -i "16" TINC_NETMASK
+read -e -p "TINC node name: " -i "node_name_without_spaces" TINC_NAME < /dev/tty
+read -e -p "TINC IP address: " -i "10.100.0." TINC_IP < /dev/tty
+read -e -p "TINC netmask: /" -i "16" TINC_NETMASK < /dev/tty
 echo "tinc:
    restart: always
    image: byscontrol/tinc
