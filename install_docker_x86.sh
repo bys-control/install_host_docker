@@ -66,7 +66,7 @@ if ! which docker 1>/dev/null; then
 	echo -e "\n${OK_COLOR}Elegir version"
 	select yn in "SNAP" "APT"; do
 	    case $yn in
-		SNAP ) install_docler_snap; break;;
+		SNAP ) install_docker_snap; break;;
 		APT ) install_docker_apt; break;;
 	    esac
 	done < /dev/tty
