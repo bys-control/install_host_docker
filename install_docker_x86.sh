@@ -63,7 +63,7 @@ sudo apt-get install -y --no-install-recommends powerline fonts-powerline
 if ! which docker 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker =====${NO_COLOR}"
 	
-	echo -e "\n${OK_COLOR}Elegir version"
+	echo -e "\n${OK_COLOR}Elegir version${NO_COLOR}"
 	select yn in "SNAP" "APT"; do
 	    case $yn in
 		SNAP ) install_docker_snap; break;;
@@ -86,7 +86,7 @@ sudo su -c 'echo "/var/snap/docker/common/var-lib-docker/containers/*/*.log {
 
 echo -e "${WARN_COLOR}===== Adding deploy keys =====${NO_COLOR}"
 mkdir -p ~/.ssh
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtT9e4pDwpGZ9FDuuS5HWTY6BV2NgmNauPRzM8rX6cpK8S5gCYMSwJg4NxTPH+n9T9pSb2/2OsFuK6XoDVt4VWaCc8a1HwcXzkfS7HQJFV8t2hWHgvrUB09jkchQPdhqt9iLTo2jsErHfrZ2VpRhB+d2C125g0LYsuuvxXl9OIYzDPM/b557TBe5WfmMgRqMysLgd6YsXohR8Zfa3yZIjhZpsVG4c8NQzXdjnhwmtP1QdNlMpTX0L5MA4p9Wqu5L2JEFlzfWWJl6NnRr4gGAaVhnsIz0utpW5/ppR+7N9EehxORd6IiKfFt2sN3dfD0yMA1eaF/7fBLMaKVKcKaEJB deploy" > ~/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtT9e4pDwpGZ9FDuuS5HWTY6BV2NgmNauPRzM8rX6cpK8S5gCYMSwJg4NxTPH+n9T9pSb2/2OsFuK6XoDVt4VWaCc8a1HwcXzkfS7HQJFV8t2hWHgvrUB09jkchQPdhqt9iLTo2jsErHfrZ2VpRhB+d2C125g0LYsuuvxXl9OIYzDPM/b557TBe5WfmMgRqMysLgd6YsXohR8Zfa3yZIjhZpsVG4c8NQzXdjnhwmtP1QdNlMpTX0L5MA4p9Wqu5L2JEFlzfWWJl6NnRr4gGAaVhnsIz0utpW5/ppR+7N9EehxORd6IiKfFt2sN3dfD0yMA1eaF/7fBLMaKVKcKaEJB deploy" >> ~/.ssh/authorized_keys
 
 echo -e "${WARN_COLOR}===== Installing tinc VPN =====${NO_COLOR}"
 mkdir -p ~/docker/tinc/hosts
