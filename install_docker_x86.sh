@@ -17,12 +17,32 @@ function install_docker_apt() {
 
 	sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 	sudo chmod +x /usr/local/bin/docker-compose
+	
+	echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
+	sudo su -c 'echo "/var/lib/docker/containers/*/*.log {
+		daily
+		rotate 7
+		copytruncate
+		missingok
+		compress
+		notifempty
+	}" > /etc/logrotate.d/docker'	
 }
 
 function install_docker_snap() {
 	sudo snap install docker
 	sudo ln -s /snap/bin/docker /usr/bin/docker
 	sudo ln -s /snap/bin/docker-compose /usr/bin/docker-compose
+
+	echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
+	sudo su -c 'echo "/var/snap/docker/common/var-lib-docker/containers/*/*.log {
+		daily
+		rotate 7
+		copytruncate
+		missingok
+		compress
+		notifempty
+	}" > /etc/logrotate.d/docker'
 }
 
 NO_COLOR='\033[0m'
@@ -73,16 +93,6 @@ if ! which docker 1>/dev/null; then
        
 	sudo groupadd docker && sudo usermod -aG docker $USER
 fi
-
-echo -e "${WARN_COLOR}===== Configuring logrotate for docker logs =====${NO_COLOR}"
-sudo su -c 'echo "/var/snap/docker/common/var-lib-docker/containers/*/*.log {
-	daily
-	rotate 7
-	copytruncate
-	missingok
-	compress
-	notifempty
-}" > /etc/logrotate.d/docker'
 
 echo -e "${WARN_COLOR}===== Adding deploy keys =====${NO_COLOR}"
 mkdir -p ~/.ssh
