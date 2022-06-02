@@ -83,13 +83,15 @@ sudo apt-get install -y --no-install-recommends powerline fonts-powerline
 if ! which docker 1>/dev/null; then
 	echo -e "${WARN_COLOR}===== Installing docker =====${NO_COLOR}"
 	
-	echo -e "\n${OK_COLOR}Elegir version${NO_COLOR}"
-	select yn in "SNAP" "APT"; do
-	    case $yn in
-		SNAP ) install_docker_snap; break;;
-		APT ) install_docker_apt; break;;
-	    esac
-	done < /dev/tty
+#	echo -e "\n${OK_COLOR}Elegir version${NO_COLOR}"
+#	select yn in "SNAP" "APT"; do
+#	    case $yn in
+#		SNAP ) install_docker_snap; break;;
+#		APT ) install_docker_apt; break;;
+#	    esac
+#	done < /dev/tty
+
+	install_docker_apt;
        
 	sudo groupadd docker && sudo usermod -aG docker $USER
 fi
